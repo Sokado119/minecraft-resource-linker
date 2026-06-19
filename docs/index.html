@@ -12,6 +12,24 @@
         .card-hover { transition: all 0.3s ease; }
         .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2); }
         .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .drag-over { border-color: #10B981; background-color: rgba(16, 185, 129, 0.1); }
+        .pixelated { image-rendering: pixelated; image-rendering: crisp-edges; }
+        .checked-row { opacity: 0.3; filter: grayscale(95%); text-decoration: line-through; transition: all 0.3s; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        .accordion-content.open { max-height: 800px; opacity: 1; }
+        .rotate-90 { transform: rotate(90deg); transition: transform 0.2s; }
+        .recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .recipe-slot { width: 40px; height: 40px; background: #111827; border: 1px solid #374151; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .recipe-slot img { width: 32px; height: 32px; }
+        .recipe-arrow { display: flex; align-items: center; justify-content: center; font-size: 20px; color: #10B981; }
+        .completed { background: linear-gradient(135deg, #065f46 0%, #047857 100%); }
+        .pending { background: linear-gradient(135deg, #374151 0%, #4b5563 100%); }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
@@ -45,28 +63,24 @@
             <h3 class="text-4xl font-black text-center mb-16 text-emerald-400">Fonctionnalités</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 
-                <!-- Feature 1 -->
                 <div class="card-hover bg-gray-900 p-8 rounded-lg border border-gray-700">
                     <div class="feature-icon">🧱</div>
                     <h4 class="text-xl font-bold mb-3 text-emerald-400">Analyse de Blocs</h4>
                     <p class="text-gray-400">Charge tes schémas et obtiens la liste complète des blocs avec quantités en stacks</p>
                 </div>
 
-                <!-- Feature 2 -->
                 <div class="card-hover bg-gray-900 p-8 rounded-lg border border-gray-700">
                     <div class="feature-icon">📦</div>
                     <h4 class="text-xl font-bold mb-3 text-emerald-400">Matières Premières</h4>
                     <p class="text-gray-400">Retrouve les vraies ressources brutes à farmer (bois, minerais, sable...)</p>
                 </div>
 
-                <!-- Feature 3 -->
                 <div class="card-hover bg-gray-900 p-8 rounded-lg border border-gray-700">
                     <div class="feature-icon">🔥</div>
                     <h4 class="text-xl font-bold mb-3 text-emerald-400">Calcul Fourneaux</h4>
                     <p class="text-gray-400">Estime le temps de cuisson avec paramètres ajustables</p>
                 </div>
 
-                <!-- Feature 4 -->
                 <div class="card-hover bg-gray-900 p-8 rounded-lg border border-gray-700">
                     <div class="feature-icon">⚙️</div>
                     <h4 class="text-xl font-bold mb-3 text-emerald-400">Guides de Craft</h4>
@@ -101,15 +115,85 @@
     <!-- APP SECTION -->
     <section id="app" class="py-20 px-6 bg-gray-800">
         <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-black text-center mb-8 text-emerald-400">Lancer l'Application</h3>
+            <h3 class="text-3xl font-black text-center mb-8 text-emerald-400">🚀 Lancer l'Application</h3>
             
-            <div class="bg-gray-900 rounded-lg border-2 border-emerald-500 p-2 overflow-hidden">
-                <div id="appContainer" class="w-full" style="min-height: 1500px;"></div>
-            </div>
+            <div class="bg-gray-900 rounded-lg border-2 border-emerald-500 p-8">
+                <div class="w-full max-w-6xl mx-auto bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700">
+                    <h1 class="text-3xl font-black text-center text-emerald-400 mb-1 uppercase tracking-wide">🏗️ Minecraft Resource Master</h1>
+                    <p class="text-gray-400 text-center mb-6 text-xs uppercase tracking-widest" id="formatBadge">1.21+ Edition • Textures Corrigées & Craft Professionnel</p>
+                    
+                    <p class="text-gray-300 text-center mb-6 text-sm bg-gray-900/50 p-3 rounded-lg border border-gray-700 flex items-center justify-center space-x-2" id="statusText">
+                        <svg class="animate-spin h-4 w-4 text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <span>Initialisation des librairies 1.21...</span>
+                    </p>
 
-            <p class="text-center text-gray-400 mt-6 text-sm">
-                💡 L'application se charge directement. Glisse-dépose ton schéma pour commencer !
-            </p>
+                    <input type="file" id="fileInput" accept=".schem,.schematic,.litematic" class="hidden">
+
+                    <div id="dropZone" class="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center cursor-pointer transition-all hover:border-emerald-500 bg-gray-850 flex flex-col items-center justify-center select-none mb-6">
+                        <svg class="w-10 h-10 text-emerald-400 mb-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <p class="text-base font-bold pointer-events-none text-gray-200">Glisse ton plan .schem, .litematic ou .schematic ici</p>
+                        <p class="text-xs text-gray-500 mt-1 pointer-events-none">Support des ratios exacts d'établi, fours et tailleurs</p>
+                    </div>
+
+                    <div id="appContainer" class="hidden">
+                        <div class="flex space-x-2 border-b border-gray-700 mb-6 overflow-x-auto">
+                            <button id="tabBlocksBtn" class="tab-btn px-5 py-3 font-bold text-emerald-400 border-b-2 border-emerald-400 hover:bg-gray-700 transition-colors whitespace-nowrap" onclick="switchTab('blocks')">🧱 Blocs (<span id="blockCount">0</span>)</button>
+                            <button id="tabRawBtn" class="tab-btn px-5 py-3 font-bold text-gray-400 border-b-2 border-transparent hover:text-emerald-300 hover:bg-gray-700 transition-colors whitespace-nowrap" onclick="switchTab('raw')">📦 Matières Premières</button>
+                            <button id="tabSmeltingBtn" class="tab-btn px-5 py-3 font-bold text-gray-400 border-b-2 border-transparent hover:text-emerald-300 hover:bg-gray-700 transition-colors whitespace-nowrap" onclick="switchTab('smelting')">🔥 Fourneaux</button>
+                            <button id="tabCraftingBtn" class="tab-btn px-5 py-3 font-bold text-gray-400 border-b-2 border-transparent hover:text-emerald-300 hover:bg-gray-700 transition-colors whitespace-nowrap" onclick="switchTab('crafting')">⚙️ Guides de Craft</button>
+                        </div>
+
+                        <div id="tabBlocks" class="tab-content block">
+                            <div class="grid grid-cols-12 gap-4 px-4 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider border-b border-gray-700 bg-gray-900 rounded-t-lg">
+                                <div class="col-span-1 text-center">✓</div>
+                                <div class="col-span-1 text-center">🖼️</div>
+                                <div class="col-span-5">Bloc final</div>
+                                <div class="col-span-3 text-right">Stacks</div>
+                                <div class="col-span-2 text-right">Total</div>
+                            </div>
+                            <ul id="blockList" class="max-h-[500px] overflow-y-auto mt-2 space-y-1 pr-2 pb-2"></ul>
+                        </div>
+
+                        <div id="tabRaw" class="tab-content hidden">
+                            <div class="grid grid-cols-12 gap-4 px-4 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider border-b border-gray-700 bg-gray-900 rounded-t-lg items-center">
+                                <div class="col-span-5 pl-8">Ressource</div>
+                                <div class="col-span-2 text-center text-blue-400">Requis</div>
+                                <div class="col-span-2 text-center text-amber-400">En Stock</div>
+                                <div class="col-span-2 text-right text-emerald-400">À Farmer</div>
+                            </div>
+                            <ul id="rawList" class="max-h-[600px] overflow-y-auto mt-2 space-y-2 pr-2 pb-2"></ul>
+                        </div>
+
+                        <div id="tabSmelting" class="tab-content hidden p-4 space-y-4">
+                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                                <h3 class="font-bold text-emerald-400 mb-4">⏱️ Calcul du Temps de Cuisson</h3>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                                        <p class="text-xs text-gray-400 mb-2">Nombre de Fourneaux</p>
+                                        <input type="number" id="furnaceCount" min="1" value="1" class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-emerald-400 font-bold">
+                                    </div>
+                                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                                        <p class="text-xs text-gray-400 mb-2">Temps par Item (s)</p>
+                                        <input type="number" id="smeltingTime" min="1" value="10" class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-emerald-400 font-bold">
+                                    </div>
+                                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                                        <p class="text-xs text-gray-400 mb-2">Items Parallèles</p>
+                                        <input type="number" id="parallelItems" min="1" value="1" class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-emerald-400 font-bold">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="smeltingDetails" class="space-y-3"></div>
+                        </div>
+
+                        <div id="tabCrafting" class="tab-content hidden p-4">
+                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-700 mb-4">
+                                <input type="text" id="craftSearch" placeholder="Chercher un objet à crafter..." class="w-full bg-gray-800 border border-gray-600 rounded p-3 text-gray-100 placeholder-gray-500">
+                            </div>
+                            <ul id="craftingList" class="space-y-2 max-h-[600px] overflow-y-auto"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -122,7 +206,6 @@
                class="inline-block bg-gray-800 hover:bg-gray-700 border border-emerald-500 text-emerald-400 font-bold py-4 px-8 rounded-lg transition">
                 📂 Voir sur GitHub →
             </a>
-            <p class="text-gray-400 mt-6">Le code source est libre et modifiable !</p>
         </div>
     </section>
 
@@ -130,56 +213,692 @@
     <footer class="bg-gray-800 border-t border-gray-700 py-8 px-6">
         <div class="max-w-7xl mx-auto text-center text-gray-400">
             <p>🏗️ Minecraft Resource Master v1.0 • Made with ❤️ for Builders</p>
-            <p class="mt-2 text-sm">Compatible avec Minecraft 1.21+</p>
         </div>
     </footer>
 
-    <script>
-        // Charger l'application au démarrage
-        async function loadApp() {
+    <script type="module">
+        let nbtRead = null;
+        let frTranslations = {};
+        let globalBlockCounts = {};
+        window.activeRawTotals = {};
+        let itemsByName = {};
+        let itemsById = {};
+        let webRecipes = {};
+        let allRawItems = {};
+
+        const NATURAL_MATERIALS = new Set([
+            'cobblestone', 'deepslate', 'blackstone', 'quartz', 'sand', 'red_sand', 'gravel', 
+            'dirt', 'coarse_dirt', 'rooted_dirt', 'mud', 'granite', 'diorite', 'andesite', 'netherrack', 
+            'end_stone', 'sandstone', 'red_sandstone', 'tuff', 'calcite', 'obsidian', 'crying_obsidian',
+            'soul_sand', 'soul_soil', 'basalt', 'smooth_basalt', 'clay', 'coal', 'charcoal', 
+            'raw_iron', 'raw_gold', 'raw_copper', 'copper_block', 'exposed_copper', 'weathered_copper', 'oxidized_copper',
+            'iron_ingot', 'gold_ingot', 'copper_ingot', 'diamond', 'emerald', 'lapis_lazuli', 'redstone',
+            'oak_log', 'spruce_log', 'birch_log', 'jungle_log', 'acacia_log', 'dark_oak_log', 'mangrove_log', 'cherry_log',
+            'crimson_stem', 'warped_stem', 'bamboo_block', 'bamboo', 'stick', 'honeycomb', 'wheat', 'string', 'iron_nugget', 'glowstone',
+            'amethyst_shard', 'amethyst_cluster', 'nether_wart', 'popped_chorus_fruit', 'gunpowder', 'slime_ball', 'leather', 'bone'
+        ]);
+
+        const WOOD_TYPES = ['oak', 'spruce', 'birch', 'jungle', 'acacia', 'dark_oak', 'mangrove', 'cherry', 'crimson', 'warped'];
+
+        const CUSTOM_RECIPES = {
+            'cracked_deepslate_tiles': { 'deepslate_tiles': 1 },
+            'cracked_deepslate_bricks': { 'deepslate_bricks': 1 },
+            'cracked_stone_bricks': { 'stone_bricks': 1 },
+            'terracotta': { 'clay': 1 },
+            'glass': { 'sand': 1 },
+            'stone': { 'cobblestone': 1 },
+            'smooth_stone': { 'stone': 1 },
+            'tuff_bricks': { 'tuff': 1 },
+            'polished_tuff': { 'tuff': 1 },
+            'chiseled_tuff': { 'tuff': 1 },
+            'chiseled_tuff_bricks': { 'tuff': 1 },
+            'polished_granite': { 'granite': 1 },
+            'polished_andesite': { 'andesite': 1 },
+            'polished_diorite': { 'diorite': 1 },
+            'cobbled_deepslate': { 'deepslate': 1 },
+            'polished_deepslate': { 'cobbled_deepslate': 1 },
+            'deepslate_bricks': { 'cobbled_deepslate': 1 },
+            'deepslate_tiles': { 'cobbled_deepslate': 1 },
+            'chiseled_deepslate': { 'cobbled_deepslate': 1 },
+            'packed_mud': { 'mud': 1, 'wheat': 1 },
+            'mud_bricks': { 'packed_mud': 1 },
+            'cut_copper': { 'copper_block': 1 },
+            'exposed_cut_copper': { 'exposed_copper': 1 },
+            'weathered_cut_copper': { 'weathered_copper': 1 },
+            'oxidized_cut_copper': { 'oxidized_copper': 1 },
+            'copper_grate': { 'copper_block': 0.25 },
+            'exposed_copper_grate': { 'exposed_copper': 0.25 },
+            'weathered_copper_grate': { 'weathered_copper': 0.25 },
+            'oxidized_copper_grate': { 'oxidized_copper': 0.25 },
+            'iron_bars': { 'iron_ingot': 0.375 },
+            'scaffolding': { 'bamboo': 1, 'string': 0.167 },
+            'lantern': { 'iron_nugget': 8, 'torch': 1 },
+            'soul_lantern': { 'iron_nugget': 8, 'soul_torch': 1 },
+            'blast_furnace': { 'iron_ingot': 5, 'furnace': 1, 'smooth_stone': 3 },
+            'smoker': { 'oak_planks': 4, 'furnace': 1 },
+            'grindstone': { 'stick': 2, 'stone_slab': 2, 'oak_planks': 2 },
+            'barrel': { 'oak_planks': 7 },
+            'torch': { 'coal': 1, 'stick': 1 },
+            'soul_torch': { 'soul_sand': 1, 'stick': 1, 'coal': 1 }
+        };
+
+        const legacyIdMap = { 1: "stone", 2: "grass_block", 3: "dirt", 4: "cobblestone", 5: "oak_planks", 7: "bedrock", 12: "sand", 13: "gravel", 14: "gold_ore", 15: "iron_ore", 16: "coal_ore", 17: "oak_log", 18: "oak_leaves", 20: "glass", 24: "sandstone", 35: "white_wool", 41: "gold_block", 42: "iron_block", 45: "bricks", 49: "obsidian", 56: "diamond_ore", 89: "glowstone", 155: "quartz_block" };
+
+        const appContainer = document.getElementById('appContainer');
+        const statusText = document.getElementById('statusText');
+
+        window.switchTab = function(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-400', 'border-emerald-400');
+                btn.classList.add('text-gray-400', 'border-transparent');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            const activeBtn = document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Btn`);
+            activeBtn.classList.remove('text-gray-400', 'border-transparent');
+            activeBtn.classList.add('text-emerald-400', 'border-emerald-400');
+            document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.remove('hidden');
+            
+            if (tabName === 'smelting') updateSmeltingTab();
+            if (tabName === 'crafting') initCraftingTab();
+        };
+
+        window.toggleDetails = function(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-90');
+        };
+
+        async function init() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/Sokado119/minecraft-resource-linker/main/index.html');
-                const html = await response.text();
+                const nbtify = await import('https://cdn.jsdelivr.net/npm/nbtify@latest/+esm');
+                nbtRead = nbtify.read;
+
+                const [langRes, itemsRes, recipesRes] = await Promise.all([
+                    fetch('https://raw.githubusercontent.com/misode/mcmeta/assets/assets/minecraft/lang/fr_fr.json').catch(()=>null),
+                    fetch('https://raw.githubusercontent.com/PrismarineJS/minecraft-data/master/data/pc/1.21/items.json').catch(()=>null),
+                    fetch('https://raw.githubusercontent.com/PrismarineJS/minecraft-data/master/data/pc/1.21/recipes.json').catch(()=>null)
+                ]);
+
+                if (langRes && langRes.ok) frTranslations = await langRes.json();
+                if (itemsRes && itemsRes.ok) {
+                    const items = await itemsRes.json();
+                    items.forEach(item => { itemsByName[item.name] = item; itemsById[item.id] = item; });
+                }
+                if (recipesRes && recipesRes.ok) webRecipes = await recipesRes.json();
+
+                statusText.innerHTML = "🟢 Application et base de recettes chargées !";
+                statusText.classList.remove('text-gray-300');
+                statusText.classList.add('text-emerald-300');
+            } catch (err) {
+                statusText.innerHTML = "⚠️ Certaines ressources n'ont pas pu être chargées, fonctionnalités réduites.";
+            }
+        }
+        init();
+
+        function getFrenchName(id) {
+            const cleanId = id.split('[')[0].replace("minecraft:", "").toLowerCase();
+            const key = `block.minecraft.${cleanId}`;
+            const itemKey = `item.minecraft.${cleanId}`;
+            return frTranslations[key] || frTranslations[itemKey] || cleanId.replace(/_/g, ' ').toUpperCase();
+        }
+
+        function getImg(name, classes = 'w-6 h-6 pixelated') {
+            let texName = name.split('[')[0].replace("minecraft:", "").toLowerCase();
+            
+            texName = texName.replace(/^waxed_/, '');
+            if (texName.includes('stained_glass_pane')) texName = texName.replace('_pane', '');
+            if (texName === 'glass_pane') texName = 'glass';
+            if (texName.includes('carpet')) texName = texName.replace('_carpet', '');
+
+            const overrides = {
+                'scaffolding': 'block/scaffolding',
+                'barrel': 'block/barrel_top',
+                'lantern': 'item/lantern',
+                'soul_lantern': 'item/soul_lantern',
+                'blast_furnace': 'block/blast_furnace_front',
+                'smoker': 'block/smoker_front',
+                'grindstone': 'block/grindstone',
+                'iron_bars': 'block/iron_bars',
+                'chest': 'block/chest/normal',
+                'furnace': 'block/furnace_front'
+            };
+
+            const primaryPath = overrides[texName] || `block/${texName}`;
+            const fallbacks = [
+                primaryPath,
+                `item/${texName}`,
+                `block/${texName}_top`,
+                `block/${texName}_side`,
+                `block/${texName}_front`,
+                `item/${texName}_item`
+            ];
+
+            return `<img src="https://raw.githubusercontent.com/misode/mcmeta/assets/assets/minecraft/textures/${fallbacks[0]}.png" data-fallbacks='${JSON.stringify(fallbacks).replace(/'/g, "&apos;")}' data-current-index="0" onerror="const fallbacks = JSON.parse(this.dataset.fallbacks.replace(/&apos;/g, \"'\")); let idx = parseInt(this.dataset.currentIndex) + 1; if (idx < fallbacks.length) { this.dataset.currentIndex = idx; this.src = 'https://raw.githubusercontent.com/misode/mcmeta/assets/assets/minecraft/textures/' + fallbacks[idx] + '.png'; } else { this.src = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22%236b7280%22%3E%3Crect width=%2224%22 height=%2224%22/%3C/svg%3E'; }" class="${classes}" alt="${texName}">`;
+        }
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        dropZone.addEventListener('click', () => fileInput.click());
+        ['dragover', 'dragenter'].forEach(e => dropZone.addEventListener(e, (ev) => { ev.preventDefault(); dropZone.classList.add('drag-over'); }));
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', (ev) => { ev.preventDefault(); dropZone.classList.remove('drag-over'); if (ev.dataTransfer.files.length > 0) handleFile(ev.dataTransfer.files[0]); });
+        fileInput.addEventListener('change', (ev) => { if (ev.target.files.length > 0) handleFile(ev.target.files[0]); });
+
+        async function handleFile(file) {
+            if (!nbtRead) return;
+            statusText.innerHTML = `⏳ Analyse du fichier <b>${file.name}</b>...`;
+            try {
+                const buffer = await file.arrayBuffer();
+                const parsed = await nbtRead(new Uint8Array(buffer), { strict: false });
                 
-                // Extraire le contenu body
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const bodyContent = doc.body.innerHTML;
+                let res = { type: 'unknown', data: null };
+                function search(node) {
+                    if (!node || typeof node !== 'object') return;
+                    if (node.Regions || node.regions) { res.type = 'litematic'; res.data = node; return; }
+                    if ((node.Palette || node.palette) && (node.BlockData || node.blockData)) { res.type = 'sponge'; res.data = node; return; }
+                    if ((node.Blocks || node.blocks) && (node.Data || node.data)) { res.type = 'legacy'; res.data = node; return; }
+                    for (let k in node) { if (node.hasOwnProperty(k) && node[k] && typeof node[k] === 'object' && !node[k].buffer) search(node[k]); }
+                }
+                search(parsed.data);
                 
-                // Injecter dans la page
-                document.getElementById('appContainer').innerHTML = bodyContent;
-                
-                // Réexécuter les scripts
-                const scripts = doc.querySelectorAll('script');
-                scripts.forEach(script => {
-                    const newScript = document.createElement('script');
-                    if (script.src) {
-                        newScript.src = script.src;
-                        newScript.type = script.type;
-                    } else {
-                        newScript.textContent = script.textContent;
-                        newScript.type = 'module';
-                    }
-                    document.getElementById('appContainer').appendChild(newScript);
-                });
-            } catch (error) {
-                console.error('Erreur lors du chargement:', error);
-                document.getElementById('appContainer').innerHTML = `
-                    <div class="p-8 text-center">
-                        <p class="text-red-400 mb-4">⚠️ Erreur de chargement de l'application</p>
-                        <p class="text-gray-400 mb-6">Accède directement à :</p>
-                        <a href="https://sokado119.github.io/minecraft-resource-linker/index.html" 
-                           target="_blank"
-                           class="text-emerald-400 hover:text-emerald-300">
-                           Lancer l'app en direct →
-                        </a>
-                    </div>
-                `;
+                globalBlockCounts = {};
+                if (res.type === 'litematic') parseLitematic(res.data);
+                else if (res.type === 'sponge') parseSponge(res.data);
+                else if (res.type === 'legacy') parseLegacy(res.data);
+                else { statusText.textContent = "❌ Format non pris en charge."; return; }
+
+                buildUI();
+            } catch (err) {
+                console.error(err);
+                statusText.textContent = "❌ Erreur lors de la lecture du fichier.";
             }
         }
 
-        // Attendre que le DOM soit chargé
-        window.addEventListener('load', loadApp);
+        function parseLitematic(node) {
+            const regions = node.Regions?.value || node.Regions || node.regions;
+            for (let rName in regions) {
+                const reg = regions[rName];
+                const palette = reg.BlockStatePalette?.value || reg.BlockStatePalette;
+                const states = reg.BlockStates?.value || reg.BlockStates;
+                if (!palette || !states) continue;
+                const sx = Math.abs(Number(reg.Size?.X ?? reg.Size?.x ?? 0)), sy = Math.abs(Number(reg.Size?.Y ?? reg.Size?.y ?? 0)), sz = Math.abs(Number(reg.Size?.Z ?? reg.Size?.z ?? 0));
+                const totalVolume = sx * sy * sz;
+                const bitsPerBlock = Math.max(2, Math.ceil(Math.log2(palette.length)));
+                const blocksPerLong = Math.floor(64 / bitsPerBlock);
+                const mask = (1n << BigInt(bitsPerBlock)) - 1n;
+                let blockCount = 0;
+                for (let i = 0; i < states.length; i++) {
+                    let longVal = BigInt(states[i]);
+                    for (let b = 0; b < blocksPerLong; b++) {
+                        if (blockCount >= totalVolume) break;
+                        const paletteIdx = Number((longVal >> BigInt(b * bitsPerBlock)) & mask);
+                        if (paletteIdx < palette.length) {
+                            const block = palette[paletteIdx];
+                            const id = block.Name?.value || block.Name || "air";
+                            if (!id.includes("air")) globalBlockCounts[id] = (globalBlockCounts[id] || 0) + 1;
+                        }
+                        blockCount++;
+                    }
+                }
+            }
+        }
+
+        function parseSponge(node) {
+            const palette = node.Palette?.value || node.Palette;
+            let blockData = node.BlockData?.value || node.BlockData;
+            if (blockData.buffer) blockData = new Uint8Array(blockData.buffer, blockData.byteOffset, blockData.byteLength);
+            const sortedPalette = Object.entries(palette).map(([k, v]) => ({ id: k, index: Number(v?.value ?? v) })).sort((a, b) => a.index - b.index);
+            const ids = sortedPalette.map(p => p.id);
+            let offset = 0;
+            while (offset < blockData.length) {
+                let val = 0, shift = 0, b;
+                do { if (offset >= blockData.length) break; b = blockData[offset++]; val |= (b & 0x7F) << shift; shift += 7; } while (b & 0x80);
+                const stringId = ids[val];
+                if (stringId && !stringId.includes("air")) globalBlockCounts[stringId] = (globalBlockCounts[stringId] || 0) + 1;
+            }
+        }
+
+        function parseLegacy(node) {
+            const blocks = node.Blocks?.value || node.Blocks;
+            for (let i = 0; i < blocks.length; i++) {
+                const id = blocks[i] & 0xFF;
+                if (id !== 0) {
+                    const stringId = "minecraft:" + (legacyIdMap[id] || `block_id_${id}`);
+                    globalBlockCounts[stringId] = (globalBlockCounts[stringId] || 0) + 1;
+                }
+            }
+        }
+
+        function formatStacks(qty) {
+            const s = Math.floor(qty / 64), r = Math.ceil(qty % 64);
+            return s > 0 ? `${s}S ${r > 0 ? '+ ' + r : ''}` : `${r}`;
+        }
+
+        function getRawMaterials(name, qty) {
+            let results = {};
+            const cleanName = name.split('[')[0].replace("minecraft:", "").toLowerCase();
+
+            function traverse(currentItemName, currentQty, visited) {
+                if (visited.size > 100 || currentQty <= 0) return;
+
+                if (NATURAL_MATERIALS.has(currentItemName)) {
+                    results[currentItemName] = (results[currentItemName] || 0) + currentQty;
+                    return;
+                }
+
+                if (currentItemName.startsWith('waxed_')) {
+                    const unwaxed = currentItemName.replace('waxed_', '');
+                    traverse(unwaxed, currentQty, new Set(visited));
+                    results['honeycomb'] = (results['honeycomb'] || 0) + currentQty;
+                    return;
+                }
+
+                if (currentItemName.endsWith('_concrete_powder')) {
+                    traverse('sand', currentQty * 0.5, new Set(visited));
+                    traverse('gravel', currentQty * 0.5, new Set(visited));
+                    return;
+                }
+                if (currentItemName.endsWith('_concrete')) {
+                    traverse(currentItemName + '_powder', currentQty, new Set(visited));
+                    return;
+                }
+
+                if (currentItemName.endsWith('_stained_glass_pane')) {
+                    traverse(currentItemName.replace('_pane', ''), currentQty * 0.375, new Set(visited));
+                    return;
+                }
+                if (currentItemName === 'glass_pane') {
+                    traverse('glass', currentQty * 0.375, new Set(visited));
+                    return;
+                }
+
+                if (currentItemName.endsWith('_stained_glass')) {
+                    traverse('glass', currentQty, new Set(visited));
+                    return;
+                }
+
+                if (currentItemName.endsWith('_terracotta') && currentItemName !== 'terracotta') {
+                    traverse('terracotta', currentQty, new Set(visited));
+                    return;
+                }
+
+                for (let w of WOOD_TYPES) {
+                    let baseLog = w === 'crimson' || w === 'warped' ? `${w}_stem` : `${w}_log`;
+                    if (currentItemName === `${w}_planks`) {
+                        traverse(baseLog, currentQty * 0.25, new Set(visited));
+                        return;
+                    }
+                    if (currentItemName === `${w}_wood` || currentItemName === `stripped_${w}_wood` || currentItemName === `stripped_${w}_log`) {
+                        traverse(baseLog, currentQty * 1.334, new Set(visited));
+                        return;
+                    }
+                }
+
+                if (currentItemName.endsWith('_fence') && !currentItemName.includes('nether') && !currentItemName.includes('iron')) {
+                    const woodType = currentItemName.replace('_fence', '');
+                    traverse(`${woodType}_planks`, currentQty * 1.334, new Set(visited));
+                    traverse('stick', currentQty * 0.667, new Set(visited));
+                    return;
+                }
+
+                if (CUSTOM_RECIPES[currentItemName]) {
+                    const mapping = CUSTOM_RECIPES[currentItemName];
+                    for (let ingName in mapping) {
+                        traverse(ingName, currentQty * mapping[ingName], new Set(visited));
+                    }
+                    return;
+                }
+
+                if (currentItemName.endsWith('_stairs')) {
+                    traverse(currentItemName.replace('_stairs', ''), currentQty, new Set(visited));
+                    return;
+                }
+                if (currentItemName.endsWith('_slab')) {
+                    traverse(currentItemName.replace('_slab', ''), currentQty * 0.5, new Set(visited));
+                    return;
+                }
+                if (currentItemName.endsWith('_wall')) {
+                    traverse(currentItemName.replace('_wall', ''), currentQty, new Set(visited));
+                    return;
+                }
+                if (currentItemName.endsWith('_button')) {
+                    traverse(currentItemName.replace('_button', ''), currentQty * 0.1, new Set(visited));
+                    return;
+                }
+
+                const itemDef = itemsByName[currentItemName];
+                if (!itemDef) {
+                    results[currentItemName] = (results[currentItemName] || 0) + currentQty;
+                    return;
+                }
+
+                const recipes = webRecipes[itemDef.id];
+                if (!recipes || recipes.length === 0 || visited.has(itemDef.id)) {
+                    results[currentItemName] = (results[currentItemName] || 0) + currentQty;
+                    return;
+                }
+
+                const recipe = recipes[0];
+                const multiplier = currentQty / (recipe.result.count || 1);
+                const ingCounts = extractIngredients(recipe);
+
+                if (Object.keys(ingCounts).length === 0) {
+                    results[currentItemName] = (results[currentItemName] || 0) + currentQty;
+                    return;
+                }
+
+                visited.add(itemDef.id);
+                for (let ingId in ingCounts) {
+                    if (parseInt(ingId) === itemDef.id) {
+                        results[currentItemName] = (results[currentItemName] || 0) + currentQty;
+                        continue;
+                    }
+                    const ingDef = itemsById[ingId];
+                    if (ingDef) {
+                        traverse(ingDef.name, ingCounts[ingId] * multiplier, new Set(visited));
+                    } else {
+                        results["item_" + ingId] = (results["item_" + ingId] || 0) + (ingCounts[ingId] * multiplier);
+                    }
+                }
+            }
+
+            traverse(cleanName, qty, new Set());
+            return results;
+        }
+
+        function extractIngredients(recipe) {
+            let ingCounts = {};
+            const process = (ing) => {
+                if (!ing) return;
+                let id = Array.isArray(ing) ? ing[0] : (typeof ing === 'object' ? ing.id : ing);
+                if (id) ingCounts[id] = (ingCounts[id] || 0) + 1;
+            };
+            if (recipe.inShape) recipe.inShape.forEach(row => { if (Array.isArray(row)) row.forEach(process); });
+            if (recipe.ingredients) recipe.ingredients.forEach(process);
+            return ingCounts;
+        }
+
+        function buildUI() {
+            const sortedBlocks = Object.entries(globalBlockCounts).map(([id, qty]) => ({
+                id, qty, name: id.split('[')[0].replace("minecraft:", "").toLowerCase(), fr: getFrenchName(id)
+            })).sort((a, b) => b.qty - a.qty);
+
+            const blockList = document.getElementById('blockList');
+            blockList.innerHTML = '';
+            let linkedResources = {};
+            window.activeRawTotals = {};
+            allRawItems = {};
+
+            sortedBlocks.forEach(b => {
+                const deps = getRawMaterials(b.name, b.qty);
+                const depsJson = JSON.stringify(deps).replace(/"/g, '&quot;');
+                
+                const li = document.createElement('li');
+                li.className = "bg-gray-800 p-2 rounded-lg border border-gray-700 grid grid-cols-12 gap-4 items-center transition-all";
+                li.innerHTML = `
+                    <div class="col-span-1 text-center">
+                        <input type="checkbox" class="w-4 h-4 accent-emerald-500 cursor-pointer" 
+                               onchange="this.closest('li').classList.toggle('checked-row', this.checked); updateMultipleRawMaterials('${depsJson}', this.checked)">
+                    </div>
+                    <div class="col-span-1 flex justify-center">${getImg(b.name, 'w-6 h-6')}</div>
+                    <div class="col-span-5 text-sm font-bold truncate">${b.fr}</div>
+                    <div class="col-span-3 text-right text-xs text-emerald-400 font-mono font-bold">${formatStacks(b.qty)}</div>
+                    <div class="col-span-2 text-right text-xs font-mono text-gray-400">×${b.qty}</div>
+                `;
+                blockList.appendChild(li);
+
+                for (const rawName in deps) {
+                    const rawQty = deps[rawName];
+                    const rawId = "minecraft:" + rawName;
+                    if (!linkedResources[rawId]) {
+                        linkedResources[rawId] = { rawId: rawId, name: rawName, fr: getFrenchName(rawId), totalRequired: 0, usedFor: [] };
+                        allRawItems[rawId] = linkedResources[rawId];
+                    }
+                    linkedResources[rawId].totalRequired += rawQty;
+                    linkedResources[rawId].usedFor.push({ finalBlockName: b.name, finalBlockFr: b.fr, finalBlockQty: b.qty, rawCost: rawQty });
+                }
+            });
+
+            const rawList = document.getElementById('rawList');
+            rawList.innerHTML = '';
+            const sortedLinked = Object.values(linkedResources).sort((a, b) => b.totalRequired - a.totalRequired);
+
+            sortedLinked.forEach((r, idx) => {
+                window.activeRawTotals[r.rawId] = r.totalRequired;
+                const totalInt = Math.ceil(r.totalRequired);
+                const uniqueId = `raw-link-${idx}`;
+                const safeRawId = r.rawId.replace(/[^a-zA-Z0-9_-]/g, '_');
+                
+                let subLinksHTML = r.usedFor.map(link => `
+                    <div class="flex items-center text-xs text-gray-300 py-1.5 border-b border-gray-700/50 last:border-0">
+                        <span class="text-gray-500 mr-2">↳</span>
+                        ${getImg(link.finalBlockName, 'w-4 h-4 mr-2')}
+                        <span class="font-semibold flex-1">${link.finalBlockFr}</span>
+                        <span class="text-gray-400">×${link.finalBlockQty}</span>
+                    </div>
+                `).join('');
+
+                const li = document.createElement('li');
+                li.className = "bg-gray-800 rounded-lg border border-gray-700 overflow-hidden transition-all duration-300 pending";
+                li.innerHTML = `
+                    <div class="p-3 grid grid-cols-12 gap-4 items-center cursor-pointer hover:bg-gray-750 transition-colors" onclick="toggleDetails('${uniqueId}')">
+                        <div class="col-span-5 flex items-center min-w-0">
+                            <svg id="icon-${uniqueId}" class="w-4 h-4 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            ${getImg(r.name, 'w-7 h-7 mr-3')}
+                            <span class="text-sm font-bold truncate text-gray-100">${r.fr}</span>
+                        </div>
+                        <div class="col-span-2 text-center flex flex-col justify-center">
+                            <span id="total-qty-${safeRawId}" class="font-mono text-xs text-blue-400 font-bold">x${totalInt}</span>
+                        </div>
+                        <div class="col-span-2 text-center" onclick="event.stopPropagation()">
+                            <input type="number" id="input-${safeRawId}" min="0" placeholder="0" class="w-20 bg-gray-900 border border-gray-600 rounded-md text-center text-sm p-1 font-mono text-amber-400 font-bold focus:border-amber-500 outline-none" oninput="updateRemainingLink('${safeRawId}', '${uniqueId}')">
+                        </div>
+                        <div class="col-span-2 text-right flex flex-col justify-center" id="remaining-container-${safeRawId}">
+                            <span id="remain-qty-${safeRawId}" class="font-mono text-sm text-emerald-400 font-bold">x${totalInt}</span>
+                        </div>
+                    </div>
+                    <div id="${uniqueId}" class="accordion-content bg-gray-900/80 px-6 py-0 border-t border-gray-700/50">
+                        <div class="py-2">
+                            <p class="text-[10px] uppercase text-gray-500 font-bold mb-2">Transformations :</p>
+                            ${subLinksHTML}
+                        </div>
+                    </div>
+                `;
+                rawList.appendChild(li);
+            });
+
+            document.getElementById('blockCount').textContent = sortedBlocks.length;
+            appContainer.classList.remove('hidden');
+            statusText.innerHTML = "🟢 Schéma analysé avec succès !";
+        }
+
+        window.updateMultipleRawMaterials = function(depsJson, isChecked) {
+            const deps = JSON.parse(depsJson);
+            for (let rawName in deps) {
+                let rawId = "minecraft:" + rawName;
+                let rawCost = deps[rawName];
+                if (window.activeRawTotals[rawId] === undefined) continue;
+                if (isChecked) window.activeRawTotals[rawId] -= rawCost;
+                else window.activeRawTotals[rawId] += rawCost;
+                if (window.activeRawTotals[rawId] < 0) window.activeRawTotals[rawId] = 0;
+
+                const safeRawId = rawId.replace(/[^a-zA-Z0-9_-]/g, '_');
+                const currentTotal = Math.ceil(window.activeRawTotals[rawId]);
+                const totalQtyEl = document.getElementById(`total-qty-${safeRawId}`);
+                if (totalQtyEl) totalQtyEl.textContent = 'x' + currentTotal;
+                updateRemainingLink(safeRawId, null);
+            }
+        };
+
+        window.updateRemainingLink = function(safeRawId, uniqueId) {
+            const input = document.getElementById(`input-${safeRawId}`);
+            if (!input) return;
+            
+            const rawId = Object.keys(window.activeRawTotals).find(k => k.replace(/[^a-zA-Z0-9_-]/g, '_') === safeRawId);
+            if (!rawId) return;
+
+            const currentTotal = Math.ceil(window.activeRawTotals[rawId]);
+            const owned = Math.max(0, parseInt(input.value) || 0);
+            const remaining = Math.max(0, currentTotal - owned);
+            
+            const qtyField = document.getElementById(`remain-qty-${safeRawId}`);
+            if (qtyField) qtyField.textContent = 'x' + remaining;
+            
+            const li = input.closest('li');
+            if (li) {
+                if (remaining === 0) {
+                    li.classList.remove('pending');
+                    li.classList.add('completed');
+                } else {
+                    li.classList.remove('completed');
+                    li.classList.add('pending');
+                }
+            }
+        };
+
+        function updateSmeltingTab() {
+            const smeltingDetails = document.getElementById('smeltingDetails');
+            smeltingDetails.innerHTML = '';
+
+            const smeltingItems = Object.values(allRawItems).filter(item => {
+                const cleanName = item.name.toLowerCase();
+                return cleanName.includes('ore') || cleanName === 'clay' || 
+                       cleanName === 'sand' || cleanName === 'cobblestone' ||
+                       cleanName.includes('stone') || cleanName === 'wood' ||
+                       cleanName.includes('log');
+            });
+
+            if (smeltingItems.length === 0) {
+                smeltingDetails.innerHTML = '<p class="text-gray-400 text-center py-8">Aucun objet à fondre detecté</p>';
+                return;
+            }
+
+            smeltingItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-900 rounded-lg p-4 border border-gray-700';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3 mb-3">
+                        ${getImg(item.name, 'w-8 h-8')}
+                        <h4 class="font-bold text-emerald-400">${item.fr}</h4>
+                        <span class="text-gray-400 ml-auto">×${Math.ceil(item.totalRequired)}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div class="bg-gray-800 p-2 rounded">
+                            <p class="text-gray-400">Par four</p>
+                            <p class="text-blue-400 font-bold" id="time-per-furnace-${item.rawId}">10s</p>
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded">
+                            <p class="text-gray-400">Temps total</p>
+                            <p class="text-amber-400 font-bold" id="time-total-${item.rawId}">100s</p>
+                        </div>
+                        <div class="bg-gray-800 p-2 rounded">
+                            <p class="text-gray-400">Fourneaux requis</p>
+                            <p class="text-emerald-400 font-bold" id="furnaces-needed-${item.rawId}">1</p>
+                        </div>
+                    </div>
+                `;
+                smeltingDetails.appendChild(div);
+            });
+
+            recalculateSmelting();
+        }
+
+        window.recalculateSmelting = function() {
+            const furnaceCount = parseInt(document.getElementById('furnaceCount').value) || 1;
+            const smeltingTime = parseInt(document.getElementById('smeltingTime').value) || 10;
+            const parallelItems = parseInt(document.getElementById('parallelItems').value) || 1;
+
+            const smeltingItems = Object.values(allRawItems).filter(item => {
+                const cleanName = item.name.toLowerCase();
+                return cleanName.includes('ore') || cleanName === 'clay' || 
+                       cleanName === 'sand' || cleanName === 'cobblestone' ||
+                       cleanName.includes('stone') || cleanName === 'wood' ||
+                       cleanName.includes('log');
+            });
+
+            smeltingItems.forEach(item => {
+                const qty = Math.ceil(item.totalRequired);
+                const timePerFurnace = smeltingTime * Math.ceil(qty / (furnaceCount * parallelItems));
+                const totalTime = timePerFurnace;
+                const furnacesNeeded = Math.ceil(qty / (parallelItems * 64));
+
+                const el1 = document.getElementById(`time-per-furnace-${item.rawId}`);
+                const el2 = document.getElementById(`time-total-${item.rawId}`);
+                const el3 = document.getElementById(`furnaces-needed-${item.rawId}`);
+
+                if (el1) el1.textContent = timePerFurnace + 's';
+                if (el2) el2.textContent = totalTime + 's';
+                if (el3) el3.textContent = furnacesNeeded;
+            });
+        };
+
+        document.getElementById('furnaceCount')?.addEventListener('input', window.recalculateSmelting);
+        document.getElementById('smeltingTime')?.addEventListener('input', window.recalculateSmelting);
+        document.getElementById('parallelItems')?.addEventListener('input', window.recalculateSmelting);
+
+        function initCraftingTab() {
+            const craftingList = document.getElementById('craftingList');
+            const searchInput = document.getElementById('craftSearch');
+
+            if (!searchInput.dataset.initialized) {
+                searchInput.addEventListener('input', filterCrafting);
+                searchInput.dataset.initialized = 'true';
+            }
+
+            filterCrafting();
+        }
+
+        function filterCrafting() {
+            const search = (document.getElementById('craftSearch').value || '').toLowerCase();
+            const craftingList = document.getElementById('craftingList');
+            craftingList.innerHTML = '';
+
+            const itemsToShow = Object.values(allRawItems).filter(item => 
+                item.fr.toLowerCase().includes(search) || item.name.toLowerCase().includes(search)
+            );
+
+            itemsToShow.forEach(item => {
+                const div = document.createElement('li');
+                div.className = 'bg-gray-900 rounded-lg p-4 border border-gray-700';
+
+                const itemDef = itemsByName[item.name];
+                let recipeHTML = '<p class="text-gray-400 text-sm">Pas de recette trouvée</p>';
+
+                if (itemDef && webRecipes[itemDef.id] && webRecipes[itemDef.id][0]) {
+                    const recipe = webRecipes[itemDef.id][0];
+                    
+                    if (recipe.inShape) {
+                        recipeHTML = `<div class="flex items-center gap-4"><div class="recipe-grid">`;
+                        recipe.inShape.forEach(row => {
+                            row.forEach(ing => {
+                                const ingId = Array.isArray(ing) ? ing[0] : (ing?.id || ing);
+                                const ingDef = itemsById[ingId];
+                                if (ingDef) {
+                                    recipeHTML += `<div class="recipe-slot">${getImg(ingDef.name, 'w-8 h-8')}</div>`;
+                                }
+                            });
+                        });
+                        recipeHTML += `</div><div class="recipe-arrow">→</div><div class="recipe-slot">${getImg(item.name, 'w-10 h-10')}</div><span class="text-sm font-bold text-emerald-400">×${recipe.result.count || 1}</span></div>`;
+                    }
+                }
+
+                div.innerHTML = `
+                    <div class="flex items-center gap-3 mb-3">
+                        ${getImg(item.name, 'w-8 h-8')}
+                        <div>
+                            <h4 class="font-bold text-emerald-400">${item.fr}</h4>
+                            <p class="text-xs text-gray-500">${item.name}</p>
+                        </div>
+                        <span class="text-gray-400 ml-auto">×${Math.ceil(item.totalRequired)}</span>
+                    </div>
+                    <div class="bg-gray-800 rounded p-3 border border-gray-700">
+                        ${recipeHTML}
+                    </div>
+                `;
+                craftingList.appendChild(div);
+            });
+        }
     </script>
 
 </body>
